@@ -36,7 +36,7 @@
                     if (response["result"] == "success") {
                         let news = response['all_news']
                         for (let i = 0; i < news.length; i++) {
-                            makeCard(news[i]['url'],news[i]['title'],news[i]['desc'],news[i]['date'],news[i]['media'])
+                            makeCard(news[i]['icon'],news[i]['url'],news[i]['title'],news[i]['desc'],news[i]['date'],news[i]['media'])
                         }
                     } else {
                         alert("기사를 받아오지 못했습니다");
@@ -45,11 +45,11 @@
             });
         }
 
-        function makeCard(url, title, desc, date, media) {
+        function makeCard(icon, url, title, desc, date, media) {
             let tempHtml = `<div class="flex">
                     <div class="flex-shrink-0">
                         <div class="flex items-center justify-center h-10 w-12 rounded-md bg-indigo-300 text-white">
-                            <img class="h-6 w-auto sm:h-10" src="../static/south-korea.png">
+                            <img class="h-6 w-auto sm:h-10" src="${icon}">
                         </div>
                     </div>
                     <div class="ml-4">
