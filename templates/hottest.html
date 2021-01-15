@@ -18,6 +18,55 @@
         }
     </style>
 
+        <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#news-box").html("");
+            showNews();
+        });
+
+        function showNews() {
+            $.ajax({
+                type: 'GET',
+                url: '/api/hottest',
+                data: {},
+                success: function (response) {
+                    if (response["result"] == "success") {
+                        let news = response['all_news']
+                        for (let i = 0; i < news.length; i++) {
+                            makeCard(news[i]['icon'],news[i]['url'],news[i]['title'],news[i]['desc'],news[i]['date'],news[i]['media'])
+                        }
+                    } else {
+                        alert("기사를 받아오지 못했습니다");
+                    }
+                }
+            });
+        }
+
+        function makeCard(icon, url, title, desc, date, media) {
+            let tempHtml = `<div class="flex">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center justify-center h-10 w-12 rounded-md bg-indigo-300 text-white">
+                            <img class="h-6 w-auto sm:h-10" src="${icon}">
+                        </div>
+                    </div>
+                    <div class="ml-4">
+                        <dt class="text-lg leading-6 font-medium text-gray-900">
+                            <a class="font-semibold" href="${url}">${title}</a>
+                        </dt>
+                        <dd class="mt-2 text-sm text-gray-500">
+                            ${desc} <a>...</a>
+                            <a class="mt-2 text-xs text-gray-500 text-blue-300">${date} <a class="mt-2 text-xs text-blue-500">${media}</a></a>
+                        </dd>
+
+                    </div>
+                </div>`;
+            $("#news-box").append(tempHtml);
+
+        }
+
+    </script>
+
 
 </head>
 <body>
@@ -96,7 +145,7 @@
         </div>
 
         <div class="mt-10">
-            <dl class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+            <dl id="news-box" class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
                 <div class="flex">
                     <div class="flex-shrink-0">
                         <div class="flex items-center justify-center h-10 w-12 rounded-md bg-indigo-300 text-white">
@@ -105,7 +154,7 @@
 
                     </div>
                     <div class="ml-4">
-                        <dt class="text-lg leading-6 font-medium text-gray-900">
+                        <dt class="text-lg leading-6 font-medium text-gray-900 ">
                             <a href="#">최종건, 이란 억류 선원 교섭차 출국…"쉽지 않은 상황"(종합)</a>
                         </dt>
                         <dd class="mt-2 text-sm text-gray-500">
