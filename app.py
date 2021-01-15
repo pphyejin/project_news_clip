@@ -21,13 +21,18 @@ def latest():
     return render_template("latest.html")
 
 @app.route('/api/latest', methods=['GET'])
-def show_news():
+def show_latest_news():
     news = list(db.latestNews.find({}, {'_id': False}))
     return jsonify({'result': 'success', 'all_news': news})
 
 @app.route('/hottest')
 def hottest():
     return render_template("hottest.html")
+
+@app.route('/api/hottest', methods=['GET'])
+def show_hottest_news():
+    news = list(db.hottestNews.find({}, {'_id': False}))
+    return jsonify({'result': 'success', 'all_news': news})
 
 
 if __name__ == '__main__':
