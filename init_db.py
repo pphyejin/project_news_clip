@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
 from urllib.parse import urlparse, parse_qs
+from datetime import datetime
 
 import schedule
 
@@ -56,7 +57,7 @@ def get_latest_article():
                 # url주소가 네이버뉴스홈이면 korea 아이콘으로 db에 같이 저장하기.
                 if url[:27] == "https://news.naver.com/main":
                     doc = {
-                        # 'num': num,
+                        'created_date': datetime.now(),
                         'icon': "../static/south-korea.png",
                         'unique_key': unique_key,
                         'url': url,
