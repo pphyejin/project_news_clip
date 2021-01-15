@@ -79,7 +79,7 @@ get_latest_article()
 
 
 # def job():
-#    get_article()
+#    get_latest_article()
 
 
 # def run():
