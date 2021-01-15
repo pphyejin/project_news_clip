@@ -22,7 +22,7 @@ def latest():
 
 @app.route('/api/latest', methods=['GET'])
 def show_latest_news():
-    news = list(db.latestNews.find({}, {'_id': False}))
+    news = list(db.latestNews.find({}, {'_id': False}).sort('created_date', -1).limit(50))
     return jsonify({'result': 'success', 'all_news': news})
 
 @app.route('/hottest')
@@ -33,6 +33,7 @@ def hottest():
 def show_hottest_news():
     news = list(db.hottestNews.find({}, {'_id': False}))
     return jsonify({'result': 'success', 'all_news': news})
+
 
 
 if __name__ == '__main__':
