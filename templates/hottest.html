@@ -18,12 +18,29 @@
         }
     </style>
 
-        <script type="text/javascript">
+    <script type="text/javascript">
 
         $(document).ready(function () {
             $("#news-box").html("");
             showNews();
+            get_date();
         });
+
+        // 오늘 날짜로부터 일주일 구하기
+        function get_date() {
+            for (let i = 0; i < 7; i++) {
+                let dt = new Date();
+                dt.setDate(dt.getDate() - i)
+                let arrDayStr = ['일', '월', '화', '수', '목', '금', '토'];
+                let str = (dt.getFullYear() + '.' + dt.getMonth() + 1) + '.' + dt.getDate() + ' ' + arrDayStr[dt.getDay()];
+                console.log(str)
+
+                window.onload = function what() {
+                    document.getElementById('test').innerHTML = str;
+                };
+            }
+        }
+
 
         function showNews() {
             $.ajax({
@@ -34,7 +51,7 @@
                     if (response["result"] == "success") {
                         let news = response['all_news']
                         for (let i = 0; i < news.length; i++) {
-                            makeCard(news[i]['icon'],news[i]['url'],news[i]['title'],news[i]['desc'],news[i]['date'],news[i]['media'])
+                            makeCard(news[i]['icon'], news[i]['url'], news[i]['title'], news[i]['desc'], news[i]['date'], news[i]['media'])
                         }
                     } else {
                         alert("기사를 받아오지 못했습니다");
@@ -52,7 +69,7 @@
                     </div>
                     <div class="ml-4">
                         <dt class="text-lg leading-6 font-medium text-gray-900">
-                            <a class="font-semibold" href="${url}">${title}</a>
+                            <a class="font-semibold" href="https://news.naver.com/${url}">${title}</a>
                         </dt>
                         <dd class="mt-2 text-sm text-gray-500">
                             ${desc} <a>...</a>
@@ -62,7 +79,6 @@
                     </div>
                 </div>`;
             $("#news-box").append(tempHtml);
-
         }
 
     </script>
@@ -132,13 +148,13 @@
             </p>
 
             <div class="grid grid-cols-7 divide-x-2 divide-blue-300 m-4 flex -space-x-0.5 text-sm text-gray-400">
-                <div class="font-semibold text-red-400"><a href="#">20.01.11</a></div>
-                <div><a href="#">20.01.10</a></div>
-                <div><a href="#">20.01.09</a></div>
-                <div><a href="#">20.01.08</a></div>
-                <div><a href="#">20.01.07</a></div>
-                <div><a href="#">20.01.06</a></div>
-                <div><a href="#">20.01.05</a></div>
+                <div class="font-semibold text-red-400"><a id="test" href="#"></a></div>
+                <div><a href="#"></a></div>
+                <div><a href="#"></a></div>
+                <div><a href="#"></a></div>
+                <div><a href="#"></a></div>
+                <div><a href="#"></a></div>
+                <div><a href="#"></a></div>
             </div>
 
 
