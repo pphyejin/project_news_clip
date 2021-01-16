@@ -84,7 +84,7 @@ get_latest_article()
 
 
 # def run():
-#    schedule.every(3).minutes.do(job)  # 3분에 한번씩 실행
+#    schedule.every(1).minutes.do(job)  # 1분에 한번씩 실행
 #    while True:
 #        schedule.run_pending()
 
