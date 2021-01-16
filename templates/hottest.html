@@ -33,14 +33,9 @@
                 dt.setDate(dt.getDate() - i)
                 let arrDayStr = ['일', '월', '화', '수', '목', '금', '토'];
                 let str = (dt.getFullYear() + '.' + dt.getMonth() + 1) + '.' + dt.getDate() + ' ' + arrDayStr[dt.getDay()];
-                console.log(str)
-
-                window.onload = function what() {
-                    document.getElementById('test').innerHTML = str;
-                };
+                document.getElementById(`date_${i}`).innerHTML = str;
             }
         }
-
 
         function showNews() {
             $.ajax({
@@ -148,13 +143,13 @@
             </p>
 
             <div class="grid grid-cols-7 divide-x-2 divide-blue-300 m-4 flex -space-x-0.5 text-sm text-gray-400">
-                <div class="font-semibold text-red-400"><a id="test" href="#"></a></div>
-                <div><a href="#"></a></div>
-                <div><a href="#"></a></div>
-                <div><a href="#"></a></div>
-                <div><a href="#"></a></div>
-                <div><a href="#"></a></div>
-                <div><a href="#"></a></div>
+                <div class="font-semibold text-red-400"><a id="date_0" href="#"></a></div>
+                <div><a id="date_1" href="#"></a></div>
+                <div><a id="date_2" href="#"></a></div>
+                <div><a id="date_3" href="#"></a></div>
+                <div><a id="date_4" href="#"></a></div>
+                <div><a id="date_5" href="#"></a></div>
+                <div><a id="date_6" href="#"></a></div>
             </div>
 
 
