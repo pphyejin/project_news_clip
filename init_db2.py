@@ -88,7 +88,7 @@ get_hottest_article()
 
 
 # def run():
-#    schedule.every(3).minutes.do(job)  # 3분에 한번씩 실행
+#    schedule.every().day.at("08:00").do(job)  # 매일 08:00에 실행
 #    while True:
 #        schedule.run_pending()
 
