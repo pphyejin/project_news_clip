@@ -59,7 +59,6 @@ def get_hottest_article():
                 # url주소가 네이버뉴스홈이면 korea 아이콘으로 db에 같이 저장하기.
                 if target_url[:27] == "https://news.naver.com/main":
                     doc = {
-                        # 'num': num,
                         'icon': "../static/south-korea.png",
                         'unique_key': unique_key,
                         'url': url,
