@@ -2,7 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
 from urllib.parse import urlparse, parse_qs
-from datetime import datetime
+import datetime
+
 
 import schedule
 
@@ -41,6 +42,18 @@ def get_latest_article():
                 date = soup2.select_one('div.article_header > div.article_info > div > span.t11').text
                 media = soup2.select_one('div.article_header > div.press_logo > a > img')['alt']
 
+                # date의 오전오후를 am.pm으로 바꾸기,0 추가하기
+                if date[12:14] == '오전':
+                    date1 = date[:12] + 'AM' + date[14:]
+                else:
+                    date1 = date[:12] + 'PM' + date[14:]
+
+                if date[16] == ':':
+                    date1 = date1[:15] + '0' + date1[15:]
+
+                # date 문자열을 datetime 형식으로 변환.
+                date_time_obj = datetime.datetime.strptime(date1, '%Y.%m.%d. %p %I:%M')
+
                 # 기사를 겹치지 않고 가지고 오기 위한 유니크 키 생성.
                 parts = urlparse(url)
 
@@ -57,13 +70,14 @@ def get_latest_article():
                 # url주소가 네이버뉴스홈이면 korea 아이콘으로 db에 같이 저장하기.
                 if url[:27] == "https://news.naver.com/main":
                     doc = {
-                        'created_date': datetime.now(),
+                        # 'created_date': datetime.now(),
                         'icon': "../static/south-korea.png",
                         'unique_key': unique_key,
                         'url': url,
                         'title': title,
                         'desc': og_desc,
                         'date': date,
+                        'datetime': date_time_obj,
                         'media': media,
                     }
 
