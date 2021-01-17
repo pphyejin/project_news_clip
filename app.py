@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
 from urllib.parse import urlparse, parse_qs
+import datetime
 
 import schedule
 
@@ -16,32 +17,36 @@ app = Flask(__name__)
 def home():
     return render_template("index.html")
 
+
 @app.route('/latest')
 def latest():
     return render_template("latest.html")
 
+
 @app.route('/api/latest', methods=['GET'])
 def show_latest_news():
-    news = list(db.latestNews.find({}, {'_id': False}).sort('datetime', -1).limit(15))
+    news = list(db.latestNews.find({}, {'_id': False}).sort('datetime', -1).limit(50))
     return jsonify({'result': 'success', 'all_news': news})
+
 
 @app.route('/hottest')
 def hottest():
     return render_template("hottest.html")
 
+
 @app.route('/api/hottest', methods=['GET'])
 def show_hottest_news():
-    date_0_receive = request.form['date_0']
-    date_1_receive = request.form['date_1']
-    date_2_receive = request.form['date_2']
-    date_3_receive = request.form['date_3']
-    date_4_receive = request.form['date_4']
-    date_5_receive = request.form['date_5']
-    date_6_receive = request.form['date_6']
-    news = list(db.hottestNews.find({}, {'_id': False}))
+    date_receive = request.args.get('date')
+    print(date_receive)
+
+    date_object = datetime.datetime.strptime(date_receive, '%Y-%m-%d')
+    print(date_object)
+
+    news = list(db.hottestNews.find({'datetime': date_object}, {'_id': False}))
+
     return jsonify({'result': 'success', 'all_news': news})
 
-
+# news = list(db.hottestNews.find({}, {'_id': False}))
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5001, debug=True)
