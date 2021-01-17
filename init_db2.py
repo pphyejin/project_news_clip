@@ -46,6 +46,10 @@ def get_hottest_article():
                 date = soup2.select_one('div.article_header > div.article_info > div > span.t11').text
                 media = soup2.select_one('div.article_header > div.press_logo > a > img')['alt']
 
+                # date의 년월일만 가져와서 datetime 형식으로 변환.
+                target = date[:10]
+                date_time_obj = datetime.datetime.strptime(target, '%Y.%m.%d')
+
                 # date의 오전오후를 am.pm으로 바꾸기,0 추가하기
                 if date[12:14] == '오전':
                     date1 = date[:12] + 'AM' + date[14:]
@@ -56,7 +60,8 @@ def get_hottest_article():
                     date1 = date1[:15] + '0' + date1[15:]
 
                 # date 문자열을 datetime 형식으로 변환.
-                date_time_obj = datetime.datetime.strptime(date1, '%Y.%m.%d. %p %I:%M')
+                date_time_obj2 = datetime.datetime.strptime(date1, '%Y.%m.%d. %p %I:%M')
+
 
                 # 기사를 겹치지 않고 가지고 오기 위한 유니크 키 생성.
                 parts = urlparse(target_url)
@@ -78,7 +83,8 @@ def get_hottest_article():
                         'title': title,
                         'desc': og_desc,
                         'date': date,
-                        'datetime': date_time_obj,
+                        'datetime': date_time_obj2,
+                        'datetime_server': date_time_obj,
                         'media': media,
                     }
 
