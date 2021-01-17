@@ -42,11 +42,9 @@ def show_hottest_news():
     date_object = datetime.datetime.strptime(date_receive, '%Y-%m-%d')
     print(date_object)
 
-    news = list(db.hottestNews.find({'datetime': date_object}, {'_id': False}))
+    news = list(db.hottestNews.find({'datetime_server': date_object}, {'_id': False}).sort('datetime', -1))
 
     return jsonify({'result': 'success', 'all_news': news})
-
-# news = list(db.hottestNews.find({}, {'_id': False}))
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5001, debug=True)
