@@ -53,7 +53,6 @@ def get_latest_article():
 
                 # date 문자열을 datetime 형식으로 변환.
                 date_time_obj = datetime.datetime.strptime(date1, '%Y.%m.%d. %p %I:%M')
-
                 # 기사를 겹치지 않고 가지고 오기 위한 유니크 키 생성.
                 parts = urlparse(url)
 
